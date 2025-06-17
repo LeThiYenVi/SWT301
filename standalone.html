@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Date Time Checker (Standalone)</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #4cc9f0;
+        --accent-color: #f72585;
+        --success-color: #06d6a0;
+        --warning-color: #ffd166;
+        --danger-color: #ef476f;
+        --dark-color: #2b2d42;
+        --light-color: #f8f9fa;
+        --gray-color: #e9ecef;
+        --text-color: #212529;
+        --border-radius: 12px;
+        --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+
+        /* Dark mode variables */
+        --bg-dark: #121212;
+        --bg-dark-lighter: #1f1f1f;
+        --text-dark: #e0e0e0;
+        --card-dark: rgba(255, 255, 255, 0.05);
+        --border-dark: rgba(255, 255, 255, 0.1);
+      }
+
+      [data-theme="dark"] {
+        --text-color: var(--text-dark);
+        --light-color: var(--bg-dark-lighter);
+        --dark-color: var(--text-dark);
+        --gray-color: #2d2d2d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: linear-gradient(135deg, #c2e9fb 0%, #a1c4fd 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-color);
+        position: relative;
+        overflow-x: hidden;
+        transition: background 0.5s ease;
+      }
+
+      body[data-theme="dark"] {
+        background: linear-gradient(135deg, #121212 0%, #2d3436 100%);
+      }
+
+      /* Animated background shapes */
+      .bg-shapes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .shape {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        animation: float 15s infinite ease-in-out;
+      }
+
+      .shape-1 {
+        width: 200px;
+        height: 200px;
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .shape-2 {
+        width: 150px;
+        height: 150px;
+        top: 60%;
+        left: 15%;
+        animation-delay: 2s;
+      }
+
+      .shape-3 {
+        width: 300px;
+        height: 300px;
+        top: 40%;
+        right: 10%;
+        animation-delay: 4s;
+      }
+
+      .shape-4 {
+        width: 100px;
+        height: 100px;
+        top: 20%;
+        right: 20%;
+        animation-delay: 6s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 0.5;
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(0) rotate(360deg);
+          opacity: 0.5;
+        }
+      }
+
+      .container {
+        width: 100%;
+        max-width: 650px;
+        margin: 30px auto;
+        padding: 40px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #007bff;
+      }
+
+      .input-row {
+        display: flex;
+        gap: 15px;
+      }
+
+      .input-group {
+        flex: 1;
+      }
+
+      button {
+        width: 100%;
+        padding: 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+      .button-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      .reset-button {
+        background-color: #6c757d;
+      }
+
+      .reset-button:hover {
+        background-color: #545b62;
+      }
+
+      .today-button {
+        background-color: #f72585;
+      }
+
+      .today-button:hover {
+        background-color: #b5179e;
+      }
+
+      .result {
+        margin-top: 30px;
+        padding: 15px;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 18px;
+      }
+
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Date Time Checker</h1>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label for="day">Day (1-31):</label>
+          <input type="text" id="day" placeholder="Enter day" />
+        </div>
+
+        <div class="input-group">
+          <label for="month">Month (1-12):</label>
+          <input type="text" id="month" placeholder="Enter month" />
+        </div>
+
+        <div class="input-group">
+          <label for="year">Year (1000-3000):</label>
+          <input type="text" id="year" placeholder="Enter year" />
+        </div>
+      </div>
+      <div class="button-row">
+        <button id="checkBtn">Check</button>
+        <button id="todayBtn" class="today-button">Check Today</button>
+        <button id="resetBtn" class="reset-button">Reset</button>
+      </div>
+
+      <div id="result" class="result" style="display: none"></div>
+    </div>
+
+    <script>
+      const dayInput = document.getElementById("day");
+      const monthInput = document.getElementById("month");
+      const yearInput = document.getElementById("year");
+      const checkBtn = document.getElementById("checkBtn");
+      const todayBtn = document.getElementById("todayBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const resultDiv = document.getElementById("result");
+
+      // Validate inputs client-side
+      function validateInputs() {
+        // Validate Day
+        if (!dayInput.value) {
+          showResult("Day input is required!", false);
+          return false;
+        }
+
+        const dayNum = parseInt(dayInput.value);
+        if (isNaN(dayNum)) {
+          showResult("Day input is not a number!", false);
+          return false;
+        }
+
+        if (dayNum < 1 || dayNum > 31) {
+          showResult("Day input is not in range (1-31)!", false);
+          return false;
+        }
+
+        // Validate Month
+        if (!monthInput.value) {
+          showResult("Month input is required!", false);
+          return false;
+        }
+
+        const monthNum = parseInt(monthInput.value);
+        if (isNaN(monthNum)) {
+          showResult("Month input is not a number!", false);
+          return false;
+        }
+
+        if (monthNum < 1 || monthNum > 12) {
+          showResult("Month input is not in range (1-12)!", false);
+          return false;
+        }
+
+        // Validate Year
+        if (!yearInput.value) {
+          showResult("Year input is required!", false);
+          return false;
+        }
+
+        const yearNum = parseInt(yearInput.value);
+        if (isNaN(yearNum)) {
+          showResult("Year input is not a number!", false);
+          return false;
+        }
+
+        if (yearNum < 1000 || yearNum > 3000) {
+          showResult("Year input is not in range (1000-3000)!", false);
+          return false;
+        }
+
+        return true;
+      }
+
+      // Check if the date is valid
+      function isValidDate(day, month, year) {
+        // Days in each month (non-leap year)
+        const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+        // Check for leap year
+        if (isLeapYear(year)) {
+          daysInMonth[1] = 29; // February has 29 days in leap year
+        }
+
+        // Check if day is valid for the given month
+        return day > 0 && day <= daysInMonth[month - 1];
+      }
+
+      // Check if the year is a leap year
+      function isLeapYear(year) {
+        return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+      }
+
+      // Show result
+      function showResult(message, isSuccess) {
+        resultDiv.textContent = message;
+        resultDiv.className = "result " + (isSuccess ? "success" : "error");
+        resultDiv.style.display = "block";
+      }
+
+      // Handle check button click
+      checkBtn.addEventListener("click", () => {
+        resultDiv.style.display = "none";
+
+        if (!validateInputs()) {
+          return;
+        }
+
+        checkBtn.disabled = true;
+        checkBtn.textContent = "Checking...";
+
+        // Get the input values
+        const day = parseInt(dayInput.value);
+        const month = parseInt(monthInput.value);
+        const year = parseInt(yearInput.value);
+
+        // Check if the date is valid
+        const isValid = isValidDate(day, month, year);
+
+        // Display the result
+        setTimeout(() => {
+          if (isValid) {
+            showResult(
+              `${String(day).padStart(2, "0")}/${String(month).padStart(
+                2,
+                "0"
+              )}/${String(year).padStart(4, "0")} is a valid date time.`,
+              true
+            );
+          } else {
+            showResult(
+              `${String(day).padStart(2, "0")}/${String(month).padStart(
+                2,
+                "0"
+              )}/${String(year).padStart(4, "0")} is an invalid date time.`,
+              false
+            );
+          }
+
+          checkBtn.disabled = false;
+          checkBtn.textContent = "Check";
+        }, 500); // Simulate a delay for API call
+      }); // Handle reset button click
+      resetBtn.addEventListener("click", () => {
+        dayInput.value = "";
+        monthInput.value = "";
+        yearInput.value = "";
+        resultDiv.style.display = "none";
+      });
+      // Handle Today button click
+      todayBtn.addEventListener("click", async () => {
+        todayBtn.disabled = true;
+        todayBtn.textContent = "Loading...";
+
+        try {
+          // Try to fetch current date from server first
+          const response = await fetch("http://localhost:3000/api/date/today");
+
+          if (response.ok) {
+            const data = await response.json();
+
+            // Fill in the form
+            dayInput.value = data.day;
+            monthInput.value = data.month;
+            yearInput.value = data.year;
+          } else {
+            throw new Error("Server unavailable");
+          }
+        } catch (error) {
+          console.log("Using client-side date fallback:", error.message);
+
+          // Fall back to client-side date if server is unavailable
+          const today = new Date();
+          const currentDay = today.getDate();
+          const currentMonth = today.getMonth() + 1; // JavaScript months are 0-indexed
+          const currentYear = today.getFullYear();
+
+          // Fill in the form
+          dayInput.value = currentDay;
+          monthInput.value = currentMonth;
+          yearInput.value = currentYear;
+        } finally {
+          // Trigger the check button click event
+          todayBtn.disabled = false;
+          todayBtn.textContent = "Check Today";
+          checkBtn.click();
+        }
+      });
+    </script>
+  </body>
+</html>
