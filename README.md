@@ -2,9 +2,11 @@
 CodeCeptJS_AI Testing
 
 	NHÓM 6 - CONCEPTJS AI TESTING
-1.Tạo folder AItest
+ LƯU Ý: NẾU CLONE CODE NÀY VỀ THÌ BẠN CẦN XÓA FOLDER DEMO CÓ TRONG CODE TRƯỚC
+ RỒI TIẾP TỤC LÀM CÁC BƯỚC BÊN DƯỚI
+1.Tạo folder Demo
 
-2.cd đến AItest
+2.cd đến Demo
 
 3.Chạy các lệnh sau ở terminal 
 
@@ -91,8 +93,8 @@ I.waitForText('Day input is not a number', 5);
 
 5.Tiếp tục chạy các lệnh sau ở terminal
 
--node server.js 			//Chạy backend/frontend để test tương tác
+-node server.js //(chạy ở terminal mới)			//Chạy backend/frontend để test tương tác
 
--npx codeceptjs run --steps		//Chạy toàn bộ test và hiển thị chi tiết từng bước
+-npx codeceptjs run --steps //(cd đến Demo rồi chạy)		//Chạy toàn bộ test và hiển thị chi tiết từng bước
 
 
