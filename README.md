@@ -94,7 +94,8 @@ I.waitForText('Day input is not a number', 5);
 5.Tiếp tục chạy các lệnh sau ở terminal
 
 -node server.js //(chạy ở terminal mới)			//Chạy backend/frontend để test tương tác
-
--npx codeceptjs run --steps //(cd đến Demo rồi chạy)		//Chạy toàn bộ test và hiển thị chi tiết từng bước
+//(cd đến Demo rồi chạy tiếp)	
+-npx playwright install 
+-npx codeceptjs run --steps 	//Chạy toàn bộ test và hiển thị chi tiết từng bước
 
 
